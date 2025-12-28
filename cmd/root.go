@@ -8,10 +8,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Version will be set during build time
+var Version = "dev"
+
 var rootCmd = &cobra.Command{
-	Use:   "bootup",
-	Short: "Bootup is a server setup CLI tool",
-	Long:  `Bootup helps you install and configure common server apps and tools.`,
+	Use:     "bootup",
+	Short:   "Bootup is a server setup CLI tool",
+	Long:    `Bootup helps you install and configure common server apps and tools.`,
+	Version: Version,
 }
 
 var servicesList = []string{"nginx", "postgresql", "mongodb", "redis", "nodejs", "kafka", "prometheus", "grafana", "alertmanager"}
