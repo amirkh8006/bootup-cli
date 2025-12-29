@@ -54,6 +54,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Development",
 		Installer:   InstallGolang,
 	},
+	"php": {
+		Name:        "php",
+		Description: "PHP programming language and runtime",
+		Category:    "Development",
+		Installer:   InstallPHP,
+	},
 	"kafka": {
 		Name:        "kafka",
 		Description: "Distributed streaming platform",
