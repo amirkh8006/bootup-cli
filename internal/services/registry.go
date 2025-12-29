@@ -48,6 +48,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Development",
 		Installer:   InstallNodeJS,
 	},
+	"golang": {
+		Name:        "golang",
+		Description: "Go programming language compiler and tools",
+		Category:    "Development",
+		Installer:   InstallGolang,
+	},
 	"kafka": {
 		Name:        "kafka",
 		Description: "Distributed streaming platform",
