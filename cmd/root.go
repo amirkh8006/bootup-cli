@@ -31,8 +31,19 @@ var listServicesCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Available services:")
 		fmt.Println("To install a service, use the command: `bootup install [service]`")
-		for _, service := range services.GetAllServices() {
-			fmt.Printf(" - %s: %s\n", service.Name, service.Description)
+		fmt.Println()
+
+		servicesByCategory := services.GetServicesByCategory()
+		categoryOrder := services.GetCategoryOrder()
+
+		for _, category := range categoryOrder {
+			if serviceList, exists := servicesByCategory[category]; exists {
+				fmt.Printf("📁 %s:\n", category)
+				for _, service := range serviceList {
+					fmt.Printf("   - %s: %s\n", service.Name, service.Description)
+				}
+				fmt.Println()
+			}
 		}
 	},
 }
