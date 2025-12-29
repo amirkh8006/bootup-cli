@@ -10,7 +10,7 @@ import (
 )
 
 // Version will be set during build time
-var Version = "dev"
+var Version = "v0.1.0"
 
 var rootCmd = &cobra.Command{
 	Use:     "bootup",
