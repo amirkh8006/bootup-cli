@@ -72,6 +72,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Development",
 		Installer:   InstallDocker,
 	},
+	"rustfs": {
+		Name:        "rustfs",
+		Description: "High-performance object storage system",
+		Category:    "Storage",
+		Installer:   InstallRustFS,
+	},
 }
 
 // GetAllServices returns a list of all available services
@@ -130,6 +136,7 @@ func GetCategoryOrder() []string {
 	return []string{
 		"Web Servers",
 		"Databases",
+		"Storage",
 		"Development",
 		"Message Brokers",
 		"Monitoring",

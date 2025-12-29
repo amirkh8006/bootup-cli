@@ -8,7 +8,6 @@ A powerful command-line tool for quickly installing and configuring common serve
 - **Multiple Services**: Support for databases, web servers, monitoring tools, and more
 - **Auto-configuration**: Automatically handles package updates and dependencies
 - **Interactive Interface**: User-friendly commands with helpful output messages
-- **Shell Completion**: Built-in shell completion support for better UX
 
 ## 📦 Supported Services
 
