@@ -31,3 +31,7 @@ func PrintSuccess(msg string) {
 func PrintError(msg string) {
 	fmt.Printf("❌ %s\n", msg)
 }
+
+func PrintWarning(msg string) {
+	fmt.Printf("⚠️  %s\n", msg)
+}

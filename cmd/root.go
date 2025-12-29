@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/amirkh8006/bootup-cli/internal/services"
+	"github.com/amirkh8006/bootup-cli/internal/tui"
 	"github.com/spf13/cobra"
 )
 
@@ -16,9 +17,13 @@ var rootCmd = &cobra.Command{
 	Short:   "Bootup is a server setup CLI tool",
 	Long:    `Bootup helps you install and configure common server apps and tools.`,
 	Version: Version,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := tui.Run(); err != nil {
+			fmt.Printf("Error running TUI: %v\n", err)
+			os.Exit(1)
+		}
+	},
 }
-
-var servicesList = []string{"nginx", "postgresql", "mongodb", "redis", "nodejs", "kafka", "prometheus", "grafana", "alertmanager"}
 
 var listServicesCmd = &cobra.Command{
 	Use:   "list",
@@ -26,8 +31,8 @@ var listServicesCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Available services:")
 		fmt.Println("To install a service, use the command: `bootup install [service]`")
-		for _, service := range servicesList {
-			fmt.Printf(" - %s\n", service)
+		for _, service := range services.GetAllServices() {
+			fmt.Printf(" - %s: %s\n", service.Name, service.Description)
 		}
 	},
 }
@@ -40,59 +45,20 @@ var installCmd = &cobra.Command{
 		if len(args) != 0 {
 			return nil, cobra.ShellCompDirectiveNoFileComp
 		}
-		return servicesList, cobra.ShellCompDirectiveNoFileComp
+		return services.GetServiceNames(), cobra.ShellCompDirectiveNoFileComp
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		service := args[0]
 
-		switch service {
-		case "nginx":
-			if err := services.InstallNginx(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "postgresql":
-			if err := services.InstallPostgreSQL(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "mongodb":
-			if err := services.InstallMongoDB(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "redis":
-			if err := services.InstallRedis(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "nodejs":
-			if err := services.InstallNodeJS(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "kafka":
-			if err := services.InstallKafka(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "prometheus":
-			if err := services.InstallPrometheus(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "grafana":
-			if err := services.InstallGrafana(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		case "alertmanager":
-			if err := services.InstallAlertmanager(); err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		default:
+		installer, err := services.GetServiceInstaller(service)
+		if err != nil {
 			fmt.Printf("Service %s is not supported yet\n", service)
+			os.Exit(1)
+		}
+
+		if err := installer(); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
 		}
 	},
 }
