@@ -18,6 +18,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Web Servers",
 		Installer:   InstallNginx,
 	},
+	"caddy": {
+		Name:        "caddy",
+		Description: "Modern web server with automatic HTTPS",
+		Category:    "Web Servers",
+		Installer:   InstallCaddy,
+	},
 	"postgresql": {
 		Name:        "postgresql",
 		Description: "Powerful relational database",
