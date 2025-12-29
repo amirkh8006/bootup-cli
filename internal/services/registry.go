@@ -66,6 +66,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Development",
 		Installer:   InstallPHP,
 	},
+	"python": {
+		Name:        "python",
+		Description: "Python programming language and interpreter",
+		Category:    "Development",
+		Installer:   InstallPython,
+	},
 	"kafka": {
 		Name:        "kafka",
 		Description: "Distributed streaming platform",
