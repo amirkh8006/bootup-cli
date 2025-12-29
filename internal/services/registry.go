@@ -66,6 +66,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Message Brokers",
 		Installer:   InstallKafka,
 	},
+	"rabbitmq": {
+		Name:        "rabbitmq",
+		Description: "Message broker for distributed applications",
+		Category:    "Message Brokers",
+		Installer:   InstallRabbitMQ,
+	},
 	"prometheus": {
 		Name:        "prometheus",
 		Description: "Monitoring and alerting toolkit",

@@ -35,3 +35,7 @@ func PrintError(msg string) {
 func PrintWarning(msg string) {
 	fmt.Printf("⚠️  %s\n", msg)
 }
+
+func WriteToFile(filename, content string) error {
+	return os.WriteFile(filename, []byte(content), 0644)
+}
