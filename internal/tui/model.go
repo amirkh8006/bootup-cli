@@ -37,14 +37,27 @@ type InstallationMsg struct {
 // NewModel creates a new TUI model
 func NewModel() Model {
 	var tuiServices []Service
-	for _, serviceInfo := range services.GetAllServices() {
-		tuiServices = append(tuiServices, Service{
-			Name:        serviceInfo.Name,
-			Description: serviceInfo.Description,
-			Category:    serviceInfo.Category,
-			Installed:   false,
-			Installing:  false,
-		})
+
+	// Get services organized by category to maintain consistent ordering
+	servicesByCategory := services.GetServicesByCategory()
+	categoryOrder := services.GetCategoryOrder()
+
+	// Add services in the same order as they're displayed in the view
+	for _, category := range categoryOrder {
+		categoryServices, exists := servicesByCategory[category]
+		if !exists {
+			continue
+		}
+
+		for _, serviceInfo := range categoryServices {
+			tuiServices = append(tuiServices, Service{
+				Name:        serviceInfo.Name,
+				Description: serviceInfo.Description,
+				Category:    serviceInfo.Category,
+				Installed:   false,
+				Installing:  false,
+			})
+		}
 	}
 
 	return Model{

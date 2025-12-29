@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/amirkh8006/bootup-cli/internal/services"
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -38,53 +37,42 @@ func (m Model) View() string {
 	b.WriteString(headerStyle.Render("Available Services:"))
 	b.WriteString("\n\n")
 
-	// Organize services by category
-	servicesByCategory := make(map[string][]Service)
-	for _, service := range m.services {
-		servicesByCategory[service.Category] = append(servicesByCategory[service.Category], service)
-	}
+	// Display services in the same order as stored in m.services
+	currentCategory := ""
 
-	// Display services grouped by category
-	categoryOrder := services.GetCategoryOrder()
-	currentIndex := 0
-
-	for _, category := range categoryOrder {
-		categoryServices, exists := servicesByCategory[category]
-		if !exists || len(categoryServices) == 0 {
-			continue
-		}
-
-		// Category header
-		b.WriteString(categoryStyle.Render(category + ":"))
-		b.WriteString("\n")
-
-		// Services in this category
-		for _, service := range categoryServices {
-			cursor := "  "
-			if m.cursor == currentIndex {
-				cursor = "▶ "
+	for i, service := range m.services {
+		// Show category header when we encounter a new category
+		if service.Category != currentCategory {
+			if currentCategory != "" {
+				b.WriteString("\n") // Add spacing between categories
 			}
-
-			status := ""
-			name := service.Name
-
-			if service.Installing {
-				status = installingStyle.Render(" (installing...)")
-			} else if service.Installed {
-				status = installedStyle.Render(" ✓")
-			}
-
-			line := fmt.Sprintf("%s  %s - %s%s",
-				cursor, name, service.Description, status)
-
-			if m.cursor == currentIndex {
-				line = selectedStyle.Render(line)
-			}
-
-			b.WriteString(line)
+			b.WriteString(categoryStyle.Render(service.Category + ":"))
 			b.WriteString("\n")
-			currentIndex++
+			currentCategory = service.Category
 		}
+
+		cursor := "  "
+		if m.cursor == i {
+			cursor = "▶ "
+		}
+
+		status := ""
+		name := service.Name
+
+		if service.Installing {
+			status = installingStyle.Render(" (installing...)")
+		} else if service.Installed {
+			status = installedStyle.Render(" ✓")
+		}
+
+		line := fmt.Sprintf("%s  %s - %s%s",
+			cursor, name, service.Description, status)
+
+		if m.cursor == i {
+			line = selectedStyle.Render(line)
+		}
+
+		b.WriteString(line)
 		b.WriteString("\n")
 	}
 
