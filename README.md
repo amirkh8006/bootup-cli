@@ -14,7 +14,7 @@ A powerful command-line tool for quickly installing and configuring common serve
 
 - **Web Servers**: Nginx
 - **Databases**: PostgreSQL, MongoDB, Redis
-- **Development**: Node.js
+- **Development**: Node.js, Docker
 - **Message Brokers**: Apache Kafka
 - **Monitoring**: Prometheus, Grafana, Alertmanager
 
@@ -70,6 +70,15 @@ go install github.com/amirkh8006/bootup-cli@latest
 ```
 
 ## 📖 Usage
+
+### Interactive TUI Mode (Recommended)
+```bash
+bootup
+```
+
+Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services. The TUI provides:
+
+![TUI Demo](screenshots/tui-demo.png)
 
 ### List Available Services
 ```bash
