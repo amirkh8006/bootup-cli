@@ -48,6 +48,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Databases",
 		Installer:   InstallElasticsearch,
 	},
+	"mysql": {
+		Name:        "mysql",
+		Description: "Popular open-source relational database",
+		Category:    "Databases",
+		Installer:   InstallMySQL,
+	},
 	"nodejs": {
 		Name:        "nodejs",
 		Description: "JavaScript runtime environment",
