@@ -42,6 +42,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Databases",
 		Installer:   InstallRedis,
 	},
+	"elasticsearch": {
+		Name:        "elasticsearch",
+		Description: "Distributed search and analytics engine",
+		Category:    "Databases",
+		Installer:   InstallElasticsearch,
+	},
 	"nodejs": {
 		Name:        "nodejs",
 		Description: "JavaScript runtime environment",
