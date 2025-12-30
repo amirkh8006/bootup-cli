@@ -11,10 +11,11 @@ A powerful command-line tool for quickly installing and configuring common serve
 
 ## 📦 Supported Services
 
-- **Web Servers**: Nginx
-- **Databases**: PostgreSQL, MongoDB, Redis
-- **Development**: Node.js, Docker
-- **Message Brokers**: Apache Kafka
+- **Web Servers**: Nginx, Caddy
+- **Databases**: PostgreSQL, MongoDB, Redis, MariaDB, ElasticSearch, MySQL
+- **Storage**: rustFs
+- **Development**: Python, Node.js, Golang, PHP, Docker
+- **Message Brokers**: Apache Kafka, RabbitMQ
 - **Monitoring**: Prometheus, Grafana, Alertmanager
 
 ## 🛠️ Installation
@@ -30,6 +31,30 @@ Install the latest version with our installation script:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/amirkh8006/bootup-cli/main/install.sh | bash
+```
+
+## 📖 Usage
+
+### Interactive TUI Mode (Recommended)
+```bash
+bootup
+```
+
+Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services. The TUI provides:
+
+![TUI Demo](screenshots/tui-demo.png)
+
+### List Available Services
+```bash
+bootup list
+```
+
+This will display all available services you can install.
+
+### Install a Service
+
+```bash
+bootup install <service-name>
 ```
 
 ### Download Pre-built Binary
@@ -66,30 +91,6 @@ sudo mv bootup /usr/local/bin/
 
 ```bash
 go install github.com/amirkh8006/bootup-cli@latest
-```
-
-## 📖 Usage
-
-### Interactive TUI Mode (Recommended)
-```bash
-bootup
-```
-
-Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services. The TUI provides:
-
-![TUI Demo](screenshots/tui-demo.png)
-
-### List Available Services
-```bash
-bootup list
-```
-
-This will display all available services you can install.
-
-### Install a Service
-
-```bash
-bootup install <service-name>
 ```
 
 ## 🤝 Contributing
