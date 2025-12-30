@@ -54,6 +54,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Databases",
 		Installer:   InstallMySQL,
 	},
+	"clickhouse": {
+		Name:        "clickhouse",
+		Description: "High-performance columnar database for analytics",
+		Category:    "Databases",
+		Installer:   InstallClickHouse,
+	},
 	"nodejs": {
 		Name:        "nodejs",
 		Description: "JavaScript runtime environment",
