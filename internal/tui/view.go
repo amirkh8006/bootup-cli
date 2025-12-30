@@ -13,11 +13,22 @@ func (m Model) View() string {
 		return "Thanks for using Bootup CLI! 👋\n"
 	}
 
+	// Handle extremely small terminals
+	if m.height < 5 {
+		return fmt.Sprintf("🚀 Bootup\nTerminal too small (%dx%d)\nMinimum: 5 lines", m.width, m.height)
+	}
+
 	var b strings.Builder
 
-	// Header
-	b.WriteString(titleStyle.Render("🚀 Bootup CLI - Interactive Service Installer"))
-	b.WriteString("\n\n")
+	// For very small terminals, use a compact header
+	if m.height < 10 {
+		b.WriteString(titleStyle.Render("🚀 Bootup CLI"))
+		b.WriteString("\n")
+	} else {
+		// Header
+		b.WriteString(titleStyle.Render("🚀 Bootup CLI - Interactive Service Installer"))
+		b.WriteString("\n\n")
+	}
 
 	if m.installing {
 		b.WriteString(installingStyle.Render(fmt.Sprintf("Preparing to install %s...", m.selectedService)))
@@ -34,20 +45,26 @@ func (m Model) View() string {
 		b.WriteString("\n\n")
 	}
 
-	b.WriteString(headerStyle.Render("Available Services:"))
-	b.WriteString("\n\n")
+	// Compact header for small terminals
+	if m.height < 10 {
+		b.WriteString(headerStyle.Render("Services:"))
+		b.WriteString("\n")
+	} else {
+		b.WriteString(headerStyle.Render("Available Services:"))
+		b.WriteString("\n\n")
+	}
 
-	// Display services in the same order as stored in m.services
+	// Build the service list with categories
+	var serviceLines []string
 	currentCategory := ""
 
 	for i, service := range m.services {
-		// Show category header when we encounter a new category
+		// Add category header when we encounter a new category
 		if service.Category != currentCategory {
 			if currentCategory != "" {
-				b.WriteString("\n") // Add spacing between categories
+				serviceLines = append(serviceLines, "") // Add spacing between categories
 			}
-			b.WriteString(categoryStyle.Render(service.Category + ":"))
-			b.WriteString("\n")
+			serviceLines = append(serviceLines, categoryStyle.Render(service.Category+":"))
 			currentCategory = service.Category
 		}
 
@@ -72,13 +89,43 @@ func (m Model) View() string {
 			line = selectedStyle.Render(line)
 		}
 
+		serviceLines = append(serviceLines, line)
+	}
+
+	// Calculate viewport bounds
+	viewportEnd := min(m.viewportTop+m.viewportHeight, len(serviceLines))
+	viewportStart := max(0, m.viewportTop)
+
+	// Render only the visible portion
+	visibleLines := serviceLines[viewportStart:viewportEnd]
+	for _, line := range visibleLines {
 		b.WriteString(line)
 		b.WriteString("\n")
 	}
 
-	// Instructions
+	// Add scroll indicators if needed
+	if len(serviceLines) > m.viewportHeight {
+		scrollInfo := fmt.Sprintf("(Showing %d-%d of %d services)",
+			viewportStart+1, viewportEnd, len(serviceLines))
+		b.WriteString("\n")
+		b.WriteString(helpStyle.Render(scrollInfo))
+	}
+
+	// Instructions - compact for small terminals
 	b.WriteString("\n")
-	b.WriteString(helpStyle.Render("Controls: ↑/↓ or j/k: navigate • space/enter: install • q: quit"))
+	if m.height < 10 {
+		b.WriteString(helpStyle.Render("↑/↓: nav • enter: install • q: quit"))
+	} else {
+		b.WriteString(helpStyle.Render("Controls: ↑/↓,j/k: navigate • PgUp/PgDn: page • g/G: first/last • space/enter: install • q: quit"))
+	}
 
 	return b.String()
+}
+
+// min returns the minimum of two integers
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
