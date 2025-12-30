@@ -90,7 +90,7 @@ sudo mv bootup /usr/local/bin/
 ### Install via Go
 
 ```bash
-go install github.com/amirkh8006/bootup-cli@latest
+go install github.com/amirkh8006/bootup-cli/cmd/bootup@latest
 ```
 
 ## 🤝 Contributing
