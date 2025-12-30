@@ -70,7 +70,7 @@ func (m Model) View() string {
 
 		cursor := "  "
 		if m.cursor == i {
-			cursor = "▶ "
+			cursor = "▶ " // Arrow for selected services (both installed and not)
 		}
 
 		status := ""
@@ -79,14 +79,21 @@ func (m Model) View() string {
 		if service.Installing {
 			status = installingStyle.Render(" (installing...)")
 		} else if service.Installed {
-			status = installedStyle.Render(" ✓")
+			status = installedStyle.Render(" (installed ✓)")
 		}
 
 		line := fmt.Sprintf("%s  %s - %s%s",
 			cursor, name, service.Description, status)
 
 		if m.cursor == i {
-			line = selectedStyle.Render(line)
+			if service.Installed {
+				line = selectedInstalledStyle.Render(line)
+			} else {
+				line = selectedStyle.Render(line)
+			}
+		} else if service.Installed {
+			// Apply different style to installed services when not selected
+			line = installedServiceStyle.Render(line)
 		}
 
 		serviceLines = append(serviceLines, line)

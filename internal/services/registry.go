@@ -1,6 +1,10 @@
 package services
 
-import "fmt"
+import (
+	"fmt"
+	"os/exec"
+	"strings"
+)
 
 // ServiceInfo represents information about a service
 type ServiceInfo struct {
@@ -196,4 +200,68 @@ func GetCategoryOrder() []string {
 		"Monitoring",
 		"Security",
 	}
+}
+
+// IsServiceInstalled checks if a service is installed on the system
+func IsServiceInstalled(serviceName string) bool {
+	switch serviceName {
+	case "docker":
+		return isCommandAvailable("docker")
+	case "nginx":
+		return isCommandAvailable("nginx")
+	case "caddy":
+		return isCommandAvailable("caddy")
+	case "postgresql":
+		return isCommandAvailable("psql") || isCommandAvailable("pg_config")
+	case "mongodb":
+		return isCommandAvailable("mongod") || isCommandAvailable("mongo")
+	case "redis":
+		return isCommandAvailable("redis-server") || isCommandAvailable("redis-cli")
+	case "elasticsearch":
+		return isCommandAvailable("elasticsearch")
+	case "mysql":
+		return isCommandAvailable("mysql") || isCommandAvailable("mysqld")
+	case "clickhouse":
+		return isCommandAvailable("clickhouse")
+	case "nodejs":
+		return isCommandAvailable("node") || isCommandAvailable("nodejs")
+	case "golang":
+		return isCommandAvailable("go")
+	case "php":
+		return isCommandAvailable("php")
+	case "python":
+		return isCommandAvailable("python3") || isCommandAvailable("python")
+	case "kafka":
+		return isCommandAvailable("kafka-server-start") || isServiceRunning("kafka")
+	case "rabbitmq":
+		return isCommandAvailable("rabbitmq-server") || isServiceRunning("rabbitmq-server")
+	case "prometheus":
+		return isCommandAvailable("prometheus") || isServiceRunning("prometheus")
+	case "grafana":
+		return isCommandAvailable("grafana-server") || isServiceRunning("grafana-server")
+	case "alertmanager":
+		return isCommandAvailable("alertmanager") || isServiceRunning("alertmanager")
+	case "rustfs":
+		return isRustFSInstalled()
+	case "trivy":
+		return isCommandAvailable("trivy")
+	default:
+		return false
+	}
+}
+
+// isCommandAvailable checks if a command is available in PATH
+func isCommandAvailable(command string) bool {
+	_, err := exec.LookPath(command)
+	return err == nil
+}
+
+// isServiceRunning checks if a systemd service is running
+func isServiceRunning(serviceName string) bool {
+	cmd := exec.Command("systemctl", "is-active", serviceName)
+	output, err := cmd.Output()
+	if err != nil {
+		return false
+	}
+	return strings.TrimSpace(string(output)) == "active"
 }
