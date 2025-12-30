@@ -92,17 +92,8 @@ var (
 			Bold(true).
 			Foreground(lipgloss.Color("#EE6FF8"))
 
-	selectedInstalledStyle = lipgloss.NewStyle().
-				Bold(true).
-				Foreground(lipgloss.Color("#04B575")).
-				Padding(0, 1)
-
 	installedStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#04B575"))
-
-	installedServiceStyle = lipgloss.NewStyle().
-				Foreground(lipgloss.Color("#6B8E67")).
-				Italic(true)
 
 	installingStyle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("#FFAA00"))

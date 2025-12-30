@@ -86,14 +86,7 @@ func (m Model) View() string {
 			cursor, name, service.Description, status)
 
 		if m.cursor == i {
-			if service.Installed {
-				line = selectedInstalledStyle.Render(line)
-			} else {
-				line = selectedStyle.Render(line)
-			}
-		} else if service.Installed {
-			// Apply different style to installed services when not selected
-			line = installedServiceStyle.Render(line)
+			line = selectedStyle.Render(line)
 		}
 
 		serviceLines = append(serviceLines, line)
