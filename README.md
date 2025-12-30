@@ -41,7 +41,8 @@ curl -sSL https://raw.githubusercontent.com/amirkh8006/bootup-cli/main/install.s
 bootup
 ```
 
-Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services. The TUI provides:
+Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services.
+**Just choose the service you want to install and press enter.**
 
 ![TUI Demo](screenshots/tui-demo.png)
 
