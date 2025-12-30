@@ -126,6 +126,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Storage",
 		Installer:   InstallRustFS,
 	},
+	"trivy": {
+		Name:        "trivy",
+		Description: "Vulnerability scanner for containers and other artifacts",
+		Category:    "Security",
+		Installer:   InstallTrivy,
+	},
 }
 
 // GetAllServices returns a list of all available services
@@ -188,5 +194,6 @@ func GetCategoryOrder() []string {
 		"Development",
 		"Message Brokers",
 		"Monitoring",
+		"Security",
 	}
 }
