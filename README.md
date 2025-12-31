@@ -17,6 +17,7 @@ A powerful command-line tool for quickly installing and configuring common serve
 - **Development**: Python, Node.js, Golang, PHP, Docker
 - **Message Brokers**: Apache Kafka, RabbitMQ
 - **Monitoring**: Prometheus, Grafana, Alertmanager
+- **Prometheus Exporters**: MongoDB Exporter, NGINX Exporter, Node Exporter, Postgres Exporter, Redis Exporter
 - **Security**: Trivy
 
 ## 🛠️ Installation
