@@ -36,8 +36,14 @@ install: build ## Install binary to system
 
 uninstall: ## Uninstall binary from system
 	@echo "Uninstalling ${BINARY_NAME}..."
-	sudo rm -f ${INSTALL_DIR}/${BINARY_NAME}
-	@echo "✓ ${BINARY_NAME} uninstalled successfully!"
+	@BINARY_PATH=$$(which ${BINARY_NAME} 2>/dev/null); \
+	if [ -n "$$BINARY_PATH" ]; then \
+		echo "Found ${BINARY_NAME} at $$BINARY_PATH"; \
+		sudo rm -f "$$BINARY_PATH"; \
+		echo "✓ ${BINARY_NAME} uninstalled successfully!"; \
+	else \
+		echo "⚠ ${BINARY_NAME} not found in PATH"; \
+	fi
 
 
 cross-compile: clean ## Build for all platforms
