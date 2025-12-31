@@ -82,12 +82,12 @@ cd bootup-cli
 
 2. Build the application:
 ```bash
-go build -o bootup ./cmd/bootup
+make build
 ```
 
-3. (Optional) Move to PATH:
+3. (Optional) Install to PATH:
 ```bash
-sudo mv bootup /usr/local/bin/
+make install
 ```
 
 ### Install via Go
