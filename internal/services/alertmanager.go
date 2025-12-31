@@ -131,7 +131,9 @@ WantedBy=multi-user.target`, alertmanagerUser, alertmanagerUser, alertmanagerDir
 	}
 
 	// Clean up downloaded tarball
-	utils.RunCommandShell(fmt.Sprintf("rm -f %s", alertmanagerTarball))
+	if err := utils.RunCommandShell(fmt.Sprintf("rm -f %s", alertmanagerTarball)); err != nil {
+		return fmt.Errorf("failed to remove alertmanager tarball: %w", err)
+	}
 
 	utils.PrintSuccess("Prometheus Alertmanager installed and running!")
 	utils.PrintInfo("Alertmanager is accessible at http://localhost:9094")

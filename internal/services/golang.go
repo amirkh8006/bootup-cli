@@ -157,7 +157,8 @@ func installGoVersion(version string) error {
 	if err := utils.RunCommand("mkdir", "-p", tmpDir); err != nil {
 		return fmt.Errorf("failed to create temporary directory: %w", err)
 	}
-	defer utils.RunCommand("rm", "-rf", tmpDir)
+
+	defer func() { _ = utils.RunCommand("rm", "-rf", tmpDir) }()
 
 	// Download Go
 	downloadPath := fmt.Sprintf("%s/%s", tmpDir, filename)
@@ -172,7 +173,7 @@ func installGoVersion(version string) error {
 
 	// Remove existing Go installation
 	utils.PrintInfo("Removing any existing Go installation...")
-	utils.RunCommand("sudo", "rm", "-rf", "/usr/local/go")
+	_ = utils.RunCommand("sudo", "rm", "-rf", "/usr/local/go")
 
 	// Extract Go
 	utils.PrintInfo("Extracting Go...")
@@ -197,7 +198,10 @@ func installGoVersion(version string) error {
 			if err == nil && !strings.Contains(string(content), "/usr/local/go/bin") {
 				file, err := os.OpenFile(shellPath, os.O_APPEND|os.O_WRONLY, 0644)
 				if err == nil {
-					file.WriteString(goPathExport)
+					if _, err := file.WriteString(goPathExport); err != nil {
+						file.Close()
+						continue
+					}
 					file.Close()
 					utils.PrintInfo(fmt.Sprintf("Added Go to PATH in %s", shell))
 				}
@@ -263,7 +267,10 @@ func installGoVersion(version string) error {
 					if _, err := os.Stat(shellPath); err == nil {
 						file, err := os.OpenFile(shellPath, os.O_APPEND|os.O_WRONLY, 0644)
 						if err == nil {
-							file.WriteString(gopathExport)
+							if _, err := file.WriteString(gopathExport); err != nil {
+								file.Close()
+								continue
+							}
 							file.Close()
 						}
 					}

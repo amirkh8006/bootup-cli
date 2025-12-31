@@ -104,7 +104,7 @@ func InstallKafka() error {
 	}
 
 	// Clean up downloaded file
-	utils.RunCommand("rm", "-f", "/tmp/kafka.tgz")
+	_ = utils.RunCommand("rm", "-f", "/tmp/kafka.tgz")
 
 	utils.PrintSuccess("Kafka installation complete!")
 	utils.PrintInfo("Kafka is running on localhost:9092")

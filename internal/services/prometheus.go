@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+
 	"github.com/amirkh8006/bootup-cli/internal/utils"
 )
 
@@ -117,7 +118,7 @@ WantedBy=multi-user.target`, prometheusUser, prometheusUser, prometheusDir, prom
 	}
 
 	// Clean up downloaded tarball
-	utils.RunCommandShell(fmt.Sprintf("rm -f %s", prometheusTarball))
+	_ = utils.RunCommandShell(fmt.Sprintf("rm -f %s", prometheusTarball))
 
 	utils.PrintSuccess("Prometheus installed and running!")
 	utils.PrintInfo("Prometheus is accessible at http://localhost:9090")
