@@ -26,8 +26,9 @@ var rootCmd = &cobra.Command{
 }
 
 var listServicesCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List available services",
+	Use:     "list",
+	Aliases: []string{"ls"},
+	Short:   "List available services (Alias: ls)",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Available services:")
 		fmt.Println("To install a service, use the command: `bootup install [service]`")
@@ -49,9 +50,10 @@ var listServicesCmd = &cobra.Command{
 }
 
 var installCmd = &cobra.Command{
-	Use:   "install [service]",
-	Short: "Install a service",
-	Args:  cobra.MinimumNArgs(1),
+	Use:     "install [service]",
+	Aliases: []string{"i"},
+	Short:   "Install a service (Alias: i)",
+	Args:    cobra.MinimumNArgs(1),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if len(args) != 0 {
 			return nil, cobra.ShellCompDirectiveNoFileComp
