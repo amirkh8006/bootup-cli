@@ -136,6 +136,36 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Security",
 		Installer:   InstallTrivy,
 	},
+	"mongodb_exporter": {
+		Name:        "mongodb_exporter",
+		Description: "MongoDB metrics exporter for Prometheus",
+		Category:    "Prometheus Exporters",
+		Installer:   InstallMongoExporter,
+	},
+	"nginx_exporter": {
+		Name:        "nginx_exporter",
+		Description: "NGINX metrics exporter for Prometheus",
+		Category:    "Prometheus Exporters",
+		Installer:   InstallNginxExporter,
+	},
+	"node_exporter": {
+		Name:        "node_exporter",
+		Description: "Hardware and OS metrics exporter for Prometheus",
+		Category:    "Prometheus Exporters",
+		Installer:   InstallNodeExporter,
+	},
+	"postgres_exporter": {
+		Name:        "postgres_exporter",
+		Description: "PostgreSQL metrics exporter for Prometheus",
+		Category:    "Prometheus Exporters",
+		Installer:   InstallPostgresExporter,
+	},
+	"redis_exporter": {
+		Name:        "redis_exporter",
+		Description: "Redis metrics exporter for Prometheus",
+		Category:    "Prometheus Exporters",
+		Installer:   InstallRedisExporter,
+	},
 }
 
 // GetAllServices returns a list of all available services
@@ -198,6 +228,7 @@ func GetCategoryOrder() []string {
 		"Development",
 		"Message Brokers",
 		"Monitoring",
+		"Prometheus Exporters",
 		"Security",
 	}
 }
@@ -245,6 +276,16 @@ func IsServiceInstalled(serviceName string) bool {
 		return isRustFSInstalled()
 	case "trivy":
 		return isCommandAvailable("trivy")
+	case "mongodb_exporter":
+		return IsExporterInstalled("mongodb_exporter")
+	case "nginx_exporter":
+		return IsExporterInstalled("nginx_exporter")
+	case "node_exporter":
+		return IsExporterInstalled("node_exporter")
+	case "postgres_exporter":
+		return IsExporterInstalled("postgres_exporter")
+	case "redis_exporter":
+		return IsExporterInstalled("redis_exporter")
 	default:
 		return false
 	}
