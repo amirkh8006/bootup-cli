@@ -15,11 +15,10 @@
 !go.mod
 !*.sh
 !*.png
+!Makefile
 
 !README.md
 !LICENSE
-
-# !Makefile
 
 # ...even if they are in subdirectories
 !*/
