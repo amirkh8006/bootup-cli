@@ -82,7 +82,7 @@ cd bootup-cli
 
 2. Build the application:
 ```bash
-go build -o bootup
+go build -o bootup ./cmd/bootup
 ```
 
 3. (Optional) Move to PATH:
