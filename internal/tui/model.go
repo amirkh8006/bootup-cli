@@ -27,6 +27,7 @@ type Model struct {
 	installMsg      string
 	quitting        bool
 	selectedService string // Service selected for installation
+	showHelp        bool   // Whether to show help overlay
 }
 
 // InstallationMsg represents an installation status message

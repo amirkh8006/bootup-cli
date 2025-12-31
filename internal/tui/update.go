@@ -22,6 +22,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.viewportHeight = max(1, m.height-reservedLines)
 
 	case tea.KeyMsg:
+		// If help is shown, any key dismisses it
+		if m.showHelp {
+			m.showHelp = false
+			return m, nil
+		}
+
 		switch msg.String() {
 		case "ctrl+c", "q", "esc":
 			m.quitting = true
@@ -73,6 +79,18 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor = len(m.services) - 1
 				m = m.adjustViewport()
 			}
+
+		case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+			// Quick jump to service by number (1-9)
+			num := int(msg.String()[0] - '0') // Convert char to int
+			if num > 0 && num <= len(m.services) {
+				m.cursor = num - 1
+				m = m.adjustViewport()
+			}
+			
+		case "?", "h":
+			// Show help - just return the model, help will be shown in view
+			m.showHelp = true
 
 		case " ", "enter":
 			if !m.installing {

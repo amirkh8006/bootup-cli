@@ -13,6 +13,34 @@ func (m Model) View() string {
 		return "Thanks for using Bootup CLI! 👋\n"
 	}
 
+	// Show help overlay if requested
+	if m.showHelp {
+		help := `⌨️  Keyboard Shortcuts
+
+Navigation:
+  ↑, k         Move up
+  ↓, j         Move down
+  PgUp, Ctrl+B Page up
+  PgDn, Ctrl+F Page down
+  Home, g      Go to first service
+  End, G       Go to last service
+  1-9          Quick jump to service (1st-9th)
+
+Actions:
+  Space, Enter Install selected service
+  ?, h         Show/hide this help
+  q, Esc, ^C   Quit
+
+Press any key to close help...`
+
+		return lipgloss.NewStyle().
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(lipgloss.Color("#874BFD")).
+			Padding(1, 2).
+			Margin(1, 2).
+			Render(help)
+	}
+
 	// Handle extremely small terminals
 	if m.height < 5 {
 		return fmt.Sprintf("🚀 Bootup\nTerminal too small (%dx%d)\nMinimum: 5 lines", m.width, m.height)
@@ -113,11 +141,7 @@ func (m Model) View() string {
 
 	// Instructions - compact for small terminals
 	b.WriteString("\n")
-	if m.height < 10 {
-		b.WriteString(helpStyle.Render("↑/↓: nav • enter: install • q: quit"))
-	} else {
-		b.WriteString(helpStyle.Render("Controls: ↑/↓,j/k: navigate • PgUp/PgDn: page • g/G: first/last • space/enter: install • q: quit"))
-	}
+	b.WriteString(helpStyle.Render("Press ? or h for help"))
 
 	return b.String()
 }
