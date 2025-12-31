@@ -40,7 +40,7 @@ func InstallPrometheus() error {
 	if err := utils.RunCommandShell(fmt.Sprintf("sudo mkdir -p %s", prometheusDir)); err != nil {
 		return fmt.Errorf("failed to create prometheus directory: %w", err)
 	}
-	
+
 	extractCmd := fmt.Sprintf("sudo tar -xzf %s --strip-components=1 -C %s", prometheusTarball, prometheusDir)
 	if err := utils.RunCommandShell(extractCmd); err != nil {
 		return fmt.Errorf("failed to extract Prometheus: %w", err)
@@ -62,7 +62,7 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']`
-	
+
 	createConfigCmd := fmt.Sprintf("sudo tee %s > /dev/null <<'EOL'\n%s\nEOL", prometheusConfigFile, configContent)
 	if err := utils.RunCommandShell(createConfigCmd); err != nil {
 		return fmt.Errorf("failed to create prometheus config: %w", err)
@@ -96,7 +96,7 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target`, prometheusUser, prometheusUser, prometheusDir, prometheusConfigFile, prometheusDataDir)
-	
+
 	createServiceCmd := fmt.Sprintf("sudo tee /etc/systemd/system/prometheus.service > /dev/null <<'EOL'\n%s\nEOL", serviceContent)
 	if err := utils.RunCommandShell(createServiceCmd); err != nil {
 		return fmt.Errorf("failed to create systemd service: %w", err)
@@ -107,11 +107,11 @@ WantedBy=multi-user.target`, prometheusUser, prometheusUser, prometheusDir, prom
 	if err := utils.RunCommand("sudo", "systemctl", "daemon-reload"); err != nil {
 		return fmt.Errorf("failed to reload systemd: %w", err)
 	}
-	
+
 	if err := utils.RunCommand("sudo", "systemctl", "enable", "prometheus"); err != nil {
 		return fmt.Errorf("failed to enable prometheus service: %w", err)
 	}
-	
+
 	if err := utils.RunCommand("sudo", "systemctl", "start", "prometheus"); err != nil {
 		return fmt.Errorf("failed to start prometheus service: %w", err)
 	}
@@ -121,6 +121,6 @@ WantedBy=multi-user.target`, prometheusUser, prometheusUser, prometheusDir, prom
 
 	utils.PrintSuccess("Prometheus installed and running!")
 	utils.PrintInfo("Prometheus is accessible at http://localhost:9090")
-	
+
 	return nil
 }
