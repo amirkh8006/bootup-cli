@@ -116,7 +116,7 @@ verify_installation() {
     if command_exists bootup; then
         VERSION_OUTPUT=$(bootup --version 2>/dev/null || bootup version 2>/dev/null || echo "unknown")
         success "Installation verified: $VERSION_OUTPUT"
-        info "Run 'bootup --help' to get started."
+        info "Run 'bootup' to get started."
     else
         warn "bootup command not found in PATH. You may need to:"
         warn "  - Add $INSTALL_DIR to your PATH"
