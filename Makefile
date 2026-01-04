@@ -22,6 +22,10 @@ build: ## Build the binary for current platform
 	@echo "Building ${BINARY_NAME}..."
 	go build ${LDFLAGS} -o ${BINARY_NAME} ./cmd/bootup
 
+run: build ## Run the application
+	@echo "Running ${BINARY_NAME}..."
+	./${BINARY_NAME}
+
 clean: ## Clean build artifacts
 	@echo "Cleaning build artifacts..."
 	rm -rf ${BUILD_DIR}
@@ -56,18 +60,15 @@ cross-compile: clean ## Build for all platforms
 
 	@echo "✓ Cross-compilation complete! Binaries are in ${BUILD_DIR}/"
 
-## Format code
-fmt:
+fmt: ## Format code
 	@echo "Formatting code..."
 	go fmt ./...
 
-## Lint code
-lint:
+lint: ## Lint the codebase
 	@echo "Linting code..."
 	golangci-lint run
 
-## Update dependencies
-deps:
+deps: ## Update Go module dependencies
 	@echo "Updating dependencies..."
 	go mod download
 	go mod tidy
