@@ -13,7 +13,7 @@ A powerful command-line tool for quickly installing and configuring common serve
 
 - **Web Servers**: Nginx, Caddy
 - **Databases**: PostgreSQL, MongoDB, Redis, MariaDB, ElasticSearch, MySQL
-- **Storage**: rustFs
+- **Storage**: rustFs, SeaweedFS
 - **Development**: Python, Node.js, Golang, PHP, Docker
 - **Message Brokers**: Apache Kafka, RabbitMQ
 - **Monitoring**: Prometheus, Grafana, Alertmanager
