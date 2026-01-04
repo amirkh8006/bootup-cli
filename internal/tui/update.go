@@ -87,7 +87,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor = num - 1
 				m = m.adjustViewport()
 			}
-			
+
 		case "?", "h":
 			// Show help - just return the model, help will be shown in view
 			m.showHelp = true
