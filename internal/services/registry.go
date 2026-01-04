@@ -130,6 +130,12 @@ var serviceRegistry = map[string]ServiceInfo{
 		Category:    "Storage",
 		Installer:   InstallRustFS,
 	},
+	"seaweedfs": {
+		Name:        "seaweedfs",
+		Description: "Fast distributed storage system for blobs, objects, files, and data lake",
+		Category:    "Storage",
+		Installer:   InstallSeaweedFS,
+	},
 	"trivy": {
 		Name:        "trivy",
 		Description: "Vulnerability scanner for containers and other artifacts",
@@ -274,6 +280,8 @@ func IsServiceInstalled(serviceName string) bool {
 		return isCommandAvailable("alertmanager") || isServiceRunning("alertmanager")
 	case "rustfs":
 		return isRustFSInstalled()
+	case "seaweedfs":
+		return isSeaweedFSInstalled()
 	case "trivy":
 		return isCommandAvailable("trivy")
 	case "mongodb_exporter":
