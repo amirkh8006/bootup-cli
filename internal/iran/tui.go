@@ -129,7 +129,7 @@ func (m IranModel) View() string {
 
 	var b strings.Builder
 
-	b.WriteString(iranTitleStyle.Render("🇮🇷  Iran Mirror Manager"))
+	b.WriteString(iranTitleStyle.Render("Iran Mirror Manager"))
 	b.WriteString("\n\n")
 
 	switch m.screen {
@@ -208,7 +208,7 @@ func RunTUI() error {
 	cat := Categories[m.SelectedCat]
 	mirror := cat.Mirrors[m.SelectedMirror]
 
-	fmt.Printf("\n🇮🇷 Setting %s mirror to %s...\n", cat.Name, mirror.Name)
+	fmt.Printf("\nSetting %s mirror to %s...\n", cat.Name, mirror.Name)
 
 	var opErr error
 	if mirror.IsDefault {

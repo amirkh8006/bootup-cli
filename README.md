@@ -37,7 +37,7 @@ curl -sSL https://raw.githubusercontent.com/amirkh8006/bootup-cli/main/install.s
 
 **Iran servers (GitHub blocked — use mirror):**
 ```bash
-curl -sSL https://bootup.amirhdev.ir/install.sh | bash
+curl -sSL https://bootup.amirhdev.ir/install.sh | BOOTUP_MIRROR=https://bootup.amirhdev.ir bash
 ```
 
 ## 📖 Usage
@@ -64,6 +64,16 @@ This will display all available services you can install.
 ```bash
 bootup install <service-name>
 ```
+
+### Custom Mirror
+
+Use `BOOTUP_MIRROR` to download from any self-hosted mirror:
+
+```bash
+curl -sSL https://your-mirror.example.com/install.sh | BOOTUP_MIRROR=https://your-mirror.example.com bash
+```
+
+The mirror must serve binaries at `<BOOTUP_MIRROR>/releases/bootup-<os>-<arch>`.
 
 ### Download Pre-built Binary
 

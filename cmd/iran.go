@@ -45,7 +45,7 @@ var iranStatusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "Show current active mirrors",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("🇮🇷 Current Mirror Status")
+		fmt.Println("Current Mirror Status")
 		fmt.Println()
 		for _, cat := range iran.Categories {
 			fmt.Printf("  %-35s %s\n", cat.Name, cat.Status())
