@@ -8,6 +8,7 @@ A powerful command-line tool for quickly installing and configuring common serve
 - **Multiple Services**: Support for databases, web servers, monitoring tools, and more
 - **Auto-configuration**: Automatically handles package updates and dependencies
 - **Interactive Interface**: User-friendly commands with helpful output messages
+- **Iran Mirror Support**: Configure Iranian mirrors for apt, npm, pip, Docker, and Go to fix network issues on Iran-hosted servers
 
 ## 📦 Supported Services
 
@@ -27,12 +28,16 @@ A powerful command-line tool for quickly installing and configuring common serve
 - Linux-based operating system (Ubuntu/Debian recommended)
 - `sudo` privileges for package installation
 
-### Quick Install (Recommended)
+### Quick Install
 
-Install the latest version with our installation script:
-
+**Global (via GitHub):**
 ```bash
 curl -sSL https://raw.githubusercontent.com/amirkh8006/bootup-cli/main/install.sh | bash
+```
+
+**Iran servers (GitHub blocked — use mirror):**
+```bash
+curl -sSL https://bootup.amirhdev.ir/install.sh | bash
 ```
 
 ## 📖 Usage
@@ -95,6 +100,57 @@ make install
 ```bash
 go install github.com/amirkh8006/bootup-cli/cmd/bootup@latest
 ```
+
+## Iran Mirror Manager
+
+If your server is hosted in Iran and faces network issues installing packages, use the built-in mirror manager to switch to Iranian mirrors.
+
+### Interactive TUI
+```bash
+bootup iran
+```
+
+Launches an interactive TUI (same style as the main installer). Navigate with arrow keys, select with Enter.
+
+**Screen 1 — pick a category:**
+
+| Category | What it fixes |
+|---|---|
+| APT | `apt-get install` failures |
+| npm | `npm install` failures |
+| pip | `pip install` failures |
+| Docker | `docker pull` failures |
+| Go | `go get` / `go mod download` failures |
+
+**Screen 2 — pick a mirror:**
+
+Available providers: **Liara**, **ArvanCloud**, **ParsPack**, **Runflare** — or select **Default** to revert.
+
+### Other Commands
+
+```bash
+# List all available mirrors with current status
+bootup iran list
+
+# Show which mirrors are currently active
+bootup iran status
+
+# Reset a specific category to default
+bootup iran reset apt
+
+# Reset all mirrors to default
+bootup iran reset
+```
+
+### What gets changed
+
+| Category | Config location |
+|---|---|
+| APT | `/etc/apt/sources.list` (backup saved to `.bootup.bak`) |
+| npm | `npm config set registry` |
+| pip | `/etc/pip.conf` |
+| Docker | `/etc/docker/daemon.json` + daemon restart |
+| Go | `go env -w GOPROXY` |
 
 ## 🤝 Contributing
 

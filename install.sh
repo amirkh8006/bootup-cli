@@ -7,6 +7,7 @@ set -e
 VERSION="${BOOTUP_VERSION:-latest}"
 REPO="amirkh8006/bootup-cli"
 INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
+MIRROR="${BOOTUP_MIRROR:-}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -76,7 +77,9 @@ install_bootup() {
     trap "rm -rf $TMP_DIR" EXIT
 
     # Construct download URL
-    if [ "$VERSION" = "latest" ]; then
+    if [ -n "$MIRROR" ]; then
+        DOWNLOAD_URL="${MIRROR}/releases/${BINARY_NAME}"
+    elif [ "$VERSION" = "latest" ]; then
         DOWNLOAD_URL="https://github.com/${REPO}/releases/latest/download/${BINARY_NAME}"
     else
         DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${VERSION}/${BINARY_NAME}"
