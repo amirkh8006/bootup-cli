@@ -76,11 +76,20 @@ var installCmd = &cobra.Command{
 	},
 }
 
+var doctorCmd = &cobra.Command{
+	Use:   "doctor",
+	Short: "Check system health and installed service status",
+	Run: func(cmd *cobra.Command, args []string) {
+		services.RunDoctor()
+	},
+}
+
 func Execute() {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 
 	rootCmd.AddCommand(listServicesCmd)
 	rootCmd.AddCommand(installCmd)
+	rootCmd.AddCommand(doctorCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
