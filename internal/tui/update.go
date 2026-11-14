@@ -8,6 +8,9 @@ import (
 
 // Update handles TUI state updates
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	if m.preparation.open {
+		return m.updatePreparation(msg)
+	}
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
@@ -93,6 +96,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.showHelp = true
 
 		case " ", "enter":
+			if m.cursor == 0 {
+				m.preparation = newPreparationModel()
+				return m, nil
+			}
 			if !m.installing {
 				// Set installing state and quit TUI to perform installation in normal terminal
 				m.installing = true

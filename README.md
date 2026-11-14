@@ -48,6 +48,18 @@ bootup
 ```
 
 Launch the interactive Text User Interface (TUI) for an intuitive way to browse and install services.
+The first entry, **Prepare server**, opens an interactive preparation form for
+Debian/Ubuntu servers running systemd. Configure hostname, timezone, swap size,
+optional UFW rules, and optional package upgrades, then review the settings before
+starting. No command flags are required. Common tools and Chrony are installed by
+default; hostname and timezone are preserved when left blank. Existing swap and
+firewall rules are preserved, and firewall changes are off by default.
+
+Use Up/Down or Tab to move, type to edit fields, Space/Enter to toggle options,
+and Esc to go back. Preparation displays live output in the terminal (including
+any sudo prompt) and returns to a result screen in the TUI. The log is saved to
+`/var/log/bootup-prepare.log`. The workflow is embedded in the Bootup binary.
+
 **Just choose the service you want to install and press enter.**
 
 ![TUI Demo](screenshots/tui-demo.png)

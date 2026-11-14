@@ -28,6 +28,7 @@ type Model struct {
 	quitting        bool
 	selectedService string // Service selected for installation
 	showHelp        bool   // Whether to show help overlay
+	preparation     preparationModel
 }
 
 // InstallationMsg represents an installation status message
@@ -39,7 +40,11 @@ type InstallationMsg struct {
 
 // NewModel creates a new TUI model
 func NewModel() Model {
-	var tuiServices []Service
+	tuiServices := []Service{{
+		Name:        "Prepare server",
+		Description: "Common tools, time sync, hostname, swap and firewall",
+		Category:    "Server Preparation",
+	}}
 
 	// Get services organized by category to maintain consistent ordering
 	servicesByCategory := services.GetServicesByCategory()

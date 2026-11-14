@@ -9,6 +9,9 @@ import (
 
 // View renders the TUI
 func (m Model) View() string {
+	if m.preparation.open {
+		return m.preparationView()
+	}
 	if m.quitting {
 		return "Thanks for using Bootup CLI! 👋\n"
 	}
@@ -27,7 +30,7 @@ Navigation:
   1-9          Quick jump to service (1st-9th)
 
 Actions:
-  Space, Enter Install selected service
+  Space, Enter Open preparation / install service
   ?, h         Show/hide this help
   q, Esc, ^C   Quit
 
@@ -54,7 +57,7 @@ Press any key to close help...`
 		b.WriteString("\n")
 	} else {
 		// Header
-		b.WriteString(titleStyle.Render("🚀 Bootup CLI - Interactive Service Installer"))
+		b.WriteString(titleStyle.Render("🚀 Bootup CLI - Server Setup"))
 		b.WriteString("\n\n")
 	}
 
@@ -78,7 +81,7 @@ Press any key to close help...`
 		b.WriteString(headerStyle.Render("Services:"))
 		b.WriteString("\n")
 	} else {
-		b.WriteString(headerStyle.Render("Available Services:"))
+		b.WriteString(headerStyle.Render("Prepare your server or install a service:"))
 		b.WriteString("\n\n")
 	}
 
